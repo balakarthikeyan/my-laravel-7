@@ -31,8 +31,8 @@
     </ul>
 </div>
 @endif
-{{-- <form action="{{ route('products.store') }}" method="post"> --}}
-<form id="post-form" method="post" action="javascript:void(0)">
+<form action="{{ route('products.store') }}" method="post">
+{{-- <form id="post-form" method="post" action="javascript:void(0)"> --}}
     @csrf
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
@@ -44,6 +44,9 @@
                     class="form-control"
                     placeholder="Name"
                 />
+                @if ($errors->has('name'))
+                    <span class="text-danger">{{ $errors->first('name') }}</span>
+                @endif                
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
@@ -55,6 +58,9 @@
                     name="detail"
                     placeholder="Detail"
                 ></textarea>
+                @if ($errors->has('name'))
+                    <span class="text-danger">{{ $errors->first('detail') }}</span>
+                @endif                
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
@@ -62,6 +68,7 @@
         </div>
     </div>
 </form>
+{{-- 
 <script type="text/javascript">
     $.ajaxSetup({
         headers: {
@@ -88,4 +95,5 @@
         });
     });
 </script>
+--}}
 @endsection

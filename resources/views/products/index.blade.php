@@ -52,6 +52,6 @@
 
 </table>
 
-{!! $products->links() !!} 
+{!! $products->links('vendor.pagination.custom') !!} 
 
 @endsection

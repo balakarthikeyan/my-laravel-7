@@ -16,15 +16,13 @@
     <!-- jQuery -->
     <script type="text/javascript" src="{{ asset('scripts/jquery/jquery.min.js')}}"></script>
     <script type="text/javascript" src="{{ asset('scripts/jquery/jquery-migrate.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('scripts/jquery/jquery-noconflict.js')}}"></script>
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{{ asset('scripts/bootstrap/css/bootstrap.min.css')}}" type="text/css" />
     <link rel="stylesheet" href="{{ asset('scripts/bootstrap/css/bootstrap-theme.min.css')}}" type="text/css" />
     <script type="text/javascript" src="{{ asset('scripts/bootstrap/js/bootstrap.min.js')}}"></script>    
     <!-- fonts -->
     <link rel="stylesheet" href="{{ asset('fonts/font-awesome/css/font-awesome.min.css')}}" type="text/css" />
-    <!-- theme style-->
-    <!-- push target to head -->
+    <!-- page style & scripts -->
     @stack('styles')
     @stack('scripts')
 </head>

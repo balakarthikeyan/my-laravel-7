@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Facades\App\Helper\Helper;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,12 +27,18 @@ Route::prefix('admin')->group(function() {
 }) ;
 
 Route::resource('products','ProductController');
-Route::post('save-products', 'ProductController@ajax')->name('ajax.products');
+// Route::post('products', 'ProductController@ajax')->name('ajax.products');
+Route::get('datatables', function(){
+    return view('products.table');
+});
+Route::get('productslist', function(){
+    return datatables()->of(\DB::table('products')->select('*'))->make(true);
+})->name('productslist');
 
 Route::get('/pages', function () {
+    // $data = Helper::my_helper_function();
     return view('pages.index');
 });
-Route::get('/test', 'TestController@index')->middleware('testing');
 
 Route::get('chart', 'AjaxController@charts');
 Route::get('ajax', 'AjaxController@ajaxPage');
@@ -74,3 +81,8 @@ Route::get('/quote', function() {
 
     return view('pages.quote', ['quote' => $quotes[0]]);
 });
+
+Route::get('/test-middleware', 'TestController@index')->middleware('test.middleware');
+Route::get('/test-event', 'TestController@index')->name('test.event');
+Route::get('/test-markdown', 'TestController@testmail')->name('test.markdown');
+Route::get('/test-mail', 'TestController@sendmail')->name('test.mail');

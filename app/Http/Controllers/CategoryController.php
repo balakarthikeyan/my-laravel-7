@@ -18,6 +18,6 @@ class CategoryController extends Controller
     {
         $data = SubCategory::where('category_id',$category_id)->get();
         \Log::info($data);
-        return response()->json(['data' => $data]);
+        return response()->json($data);
     }
 }

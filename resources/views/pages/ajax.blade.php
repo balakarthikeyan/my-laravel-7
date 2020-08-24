@@ -49,9 +49,7 @@
         </div>
         <div class="form-group">
             <label>Sub Category:</label>
-            <select name="sub_category" id="sub_category" class="form-control">
-                <option value="0">-- Select Sub Category --</option>
-            </select>
+            <select name="sub_category" id="sub_category" class="form-control"></select>
         </div>
         <div class="form-group">
             <button class="btn btn-success btn-submit">Submit</button>
@@ -86,22 +84,30 @@
             });
         });
 
-        $('.btn-submit').on('click',function(e) {                 
+        $('#category').on('change',function(e) {                 
             var category_id = e.target.value;
-            $.ajax({                       
-                url:"{{ route('subcategories') }}",
-                type:"POST",
-                data: {
-                    id: category_id
-                },                      
-                success:function (data) {
-                    $('#subcategory').empty();
-                    $('#subcategory').append('<option value="0">-- Select Sub Category --</option>');
-                    $.each(data, function(index, subcategory) {                            
-                        $('#subcategory').append('<option value="'+subcategory.id+'">'+subcategory.name+'</option>');
-                    });
-                }
-            })
+            if(category_id>0) {
+                $.ajax({
+                    url:"{{ url('categories') }}/"+category_id,
+                    type:"POST",
+                    data: {
+                        id: category_id
+                    },                      
+                    success:function (data) {
+                        if(data) {
+                            $('#sub_category').empty();
+                            $('#sub_category').append('<option value="0">-- Select Sub Category --</option>');
+                            $.each(data, function(index, subcategory) {   
+                                console.log("data : ", index, subcategory);                      
+                                $('#sub_category').append('<option value="'+subcategory.id+'">'+subcategory.name+'</option>');
+                            });
+                        } else {
+                            $('#sub_category').empty();
+                        }
+                    }
+                });
+            }
+
         });
     </script>
 @endsection
