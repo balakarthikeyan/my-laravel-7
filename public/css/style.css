@@ -1,0 +1,25 @@
+@charset "utf-8";
+/* CSS Document */
+
+.quote-container {
+	position: relative;
+	padding: 2em 4em;
+	background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.quote-container p {
+	text-align: center;
+	color: #fff;
+	text-shadow: 1px 1px 1px rgba(150, 150, 150, 0.8);
+}
+.quote-container p.text {
+	font-family: 'Roboto Condensed', serif;
+	font-size: 4em;
+}
+.quote-container p.author {
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	font-size: 1.2em;
+	transform: translateY(-50%);
+}
