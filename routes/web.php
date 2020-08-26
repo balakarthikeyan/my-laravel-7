@@ -17,17 +17,16 @@ use Facades\App\Helper\Helper;
 Route::get('/', function () {
     return view('welcome');
 });
+
+//Authentication Routes
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
-Route::prefix('admin')->group(function() {
-    Route::get('/login','Auth\AdminLoginController@showLoginForm')->name('admin.login');
-    Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
-    Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
-    Route::get('/', 'Auth\AdminController@index')->name('admin.dashboard');
-}) ;
 
+//Products Routes
 Route::resource('products','ProductController');
 // Route::post('products', 'ProductController@ajax')->name('ajax.products');
+
+//Products based on Datatables
 Route::get('datatables', function(){
     return view('products.table');
 });
@@ -35,19 +34,19 @@ Route::get('productslist', function(){
     return datatables()->of(\DB::table('products')->select('*'))->make(true);
 })->name('productslist');
 
-Route::get('/pages', function () {
-    // $data = Helper::my_helper_function();
-    return view('pages.index');
-});
-
+//High Charts
 Route::get('chart', 'AjaxController@charts');
+
+//Ajax Routes
 Route::get('ajax', 'AjaxController@ajaxPage');
 Route::post('ajax', 'AjaxController@ajaxPost')->name('ajax.post');
 
+//Upload Image/File Routes
 Route::get('image','ImageController@create')->name('image.create');
 Route::post('image','ImageController@store')->name('image.store');
 Route::post('ajax-image','ImageController@ajax')->name('image.ajax.store');
 
+//Dynamic Dropdown Routes
 Route::get('categories','CategoryController@index');
 Route::post('categories/{id}','CategoryController@getCategory')->name('subcategories');
 
@@ -82,7 +81,34 @@ Route::get('/quote', function() {
     return view('pages.quote', ['quote' => $quotes[0]]);
 });
 
+//Test Page Routes
+Route::get('/pages', function () {
+    // $data = Helper::my_helper_function();
+    return view('pages.index');
+});
+
 Route::get('/test-middleware', 'TestController@index')->middleware('test.middleware');
 Route::get('/test-event', 'TestController@index')->name('test.event');
 Route::get('/test-markdown', 'TestController@testmail')->name('test.markdown');
 Route::get('/test-mail', 'TestController@sendmail')->name('test.mail');
+Route::get('/test-notify', 'TestController@testnotify')->name('test.notify');
+Route::get('/test-notify-asread', function(){
+	auth()->user()->unreadNotifications->markAsRead();
+	return redirect()->back();
+})->name('test.notify.asread');
+
+//oauth Routes
+Route::get('auth/social', 'Auth\LoginController@show')->name('social.login');
+Route::get('oauth/{driver}', 'Auth\LoginController@redirectToProvider')->name('social.oauth');
+Route::get('oauth/{driver}/callback', 'Auth\LoginController@handleProviderCallback')->name('social.callback');
+
+//Cache Routes
+Route::get('users', function(){
+    return \Facades\App\Repository\Users::all('name');
+});
+Route::get('cache-users', function () {
+    return \Illuminate\Support\Facades\Cache::get('users');
+});
+
+//Custom Cache with Events
+Route::get('posts', 'PostController@index');

@@ -7,6 +7,9 @@ use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 
+use App\Events\PostCreated;
+use App\Listeners\PostCreatedListener;
+
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -19,8 +22,11 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
         'App\Events\SendMail' => [
-            'App\Listeners\SendMailFired',
-        ],        
+            'App\Listeners\SendMailListener',
+        ], 
+        PostCreated::class => [
+            PostCreatedListener::class,
+        ],               
     ];
 
     /**

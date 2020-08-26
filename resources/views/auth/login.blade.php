@@ -51,7 +51,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0">
+                        <div class="form-group row">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
@@ -62,6 +62,29 @@
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-0">
+                            <div class="col-md-3">
+                                <a href="{{ route('social.oauth', 'facebook') }}" class="btn btn-primary">
+                                    Login by Facebook
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="{{ route('social.oauth', 'twitter') }}" class="btn btn-info">
+                                    Login with Twitter
+                                </a>
+                            </div>
+                            <div class="col-md-3">                            
+                                <a href="{{ route('social.oauth', 'google') }}" class="btn btn-danger">
+                                    Login with Google
+                                </a>
+                            </div>
+                            <div class="col-md-3">                            
+                                <a href="{{ route('social.oauth', 'github') }}" class="btn btn-dark">
+                                    Login with Github
+                                </a>
                             </div>
                         </div>
                     </form>

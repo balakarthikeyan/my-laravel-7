@@ -1,9 +1,11 @@
 <?php
-use Illuminate\Database\Schema\Blueprint;
+
 use Illuminate\Database\Migrations\Migration;
- 
-class CreateAlbumsTable extends Migration {
- 
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateAlbumsTable extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -11,15 +13,14 @@ class CreateAlbumsTable extends Migration {
      */
     public function up()
     {
-        Schema::create('albums', function(Blueprint $table)
-        {
+        Schema::create('albums', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
             $table->string('artist');
             $table->timestamps();
         });
     }
- 
+
     /**
      * Reverse the migrations.
      *
@@ -27,8 +28,6 @@ class CreateAlbumsTable extends Migration {
      */
     public function down()
     {
-        Schema::drop('albums');
+        Schema::dropIfExists('albums');
     }
- 
 }
-?>

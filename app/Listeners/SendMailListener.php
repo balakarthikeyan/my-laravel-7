@@ -6,10 +6,7 @@ use App\Events\SendMail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-use App\User;
-use Mail;
-
-class SendMailFired
+class SendMailListener
 {
     /**
      * Create the event listener.
@@ -29,8 +26,8 @@ class SendMailFired
      */
     public function handle(SendMail $event)
     {
-        $user = User::find($event->userId)->toArray();
-        Mail::send('emails.mailEvent', $user, function($message) use ($user) {
+        $user = \App\User::find($event->userId)->toArray();
+        \Mail::send('emails.mailEvent', $user, function($message) use ($user) {
             $message->to($user['email']);
             $message->subject('Event Testing');
         });

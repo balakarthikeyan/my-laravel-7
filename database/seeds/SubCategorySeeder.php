@@ -14,7 +14,32 @@ class SubCategorySeeder extends Seeder
     {
         SubCategory::create([
             'category_id' => 1,
-            'name' => 'Pandya'
+            'name' => 'Painting'
+        ]);
+
+        SubCategory::create([
+            'category_id' => 1,
+            'name' => 'Crafts'
+        ]);
+
+        SubCategory::create([
+            'category_id' => 2,
+            'name' => 'Botany'
+        ]);
+
+        SubCategory::create([
+            'category_id' => 2,
+            'name' => 'Zoology'
+        ]);
+
+        SubCategory::create([
+            'category_id' => 3,
+            'name' => 'Indian'
+        ]);
+
+        SubCategory::create([
+            'category_id' => 3,
+            'name' => 'American'
         ]);
     }
 }

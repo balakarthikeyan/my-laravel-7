@@ -56,5 +56,17 @@ class TestController extends Controller
         } catch (\Exception $e) {
             echo 'Error - '.$e;
         }
-    }    
+    } 
+
+    public function testnotify(Request $request)
+    {
+        $user = \App\User::find(1);
+        $details = [
+                'greeting' => 'Hi Artisan',
+                'body' => 'This is our example notification tutorial',
+                'thanks' => 'Thank you for visiting our website.',
+        ];
+        $user->notify(new \App\Notifications\TestNotification($details));
+        return dd("Done");
+    }
 }

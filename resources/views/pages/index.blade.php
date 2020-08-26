@@ -23,4 +23,11 @@
 
     <x-alert title="Welcome Alert!!!" class="alert-danger" message="Welcome To Laravel" />
 
+    @foreach ($posts as $post)
+    <div>
+        <span>{{ $post->title }}</span> at <span>{{ $post->created_at }}</span> by {{$post->user->name}}
+        <p>{{ $post->body }}</p>
+    </div>
+    @endforeach
+
 @endsection
