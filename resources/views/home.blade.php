@@ -14,7 +14,31 @@
                         </div>
                     @endif
 
+                    @role('developer')
+                        Hello developer, <br/>
+                    @endrole
+
                     {{ __('You are logged in!') }}
+
+                    @isHome
+                        <p>Hot New on Homepage</p>
+                    @endHome
+
+                    @can('create')
+                        <br/>Hello You can Create the post.
+                    @endcan
+
+                    @can('edit')
+                        <br/>Hello You can Edit the post.
+                    @endif 
+
+                    @can('view')
+                        <br/>Hello You can View the post.
+                    @endcan
+
+                    @can('delete')
+                        <br/>Hello You can Delete the post.
+                    @endif 
                 </div>
             </div>
         </div>

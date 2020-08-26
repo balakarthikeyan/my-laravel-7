@@ -103,7 +103,7 @@ Route::get('oauth/{driver}', 'Auth\LoginController@redirectToProvider')->name('s
 Route::get('oauth/{driver}/callback', 'Auth\LoginController@handleProviderCallback')->name('social.callback');
 
 //Cache Routes
-Route::get('users', function(){
+Route::get('test-users', function(){
     return \Facades\App\Repository\Users::all('name');
 });
 Route::get('cache-users', function () {
@@ -112,3 +112,22 @@ Route::get('cache-users', function () {
 
 //Custom Cache with Events
 Route::get('posts', 'PostController@index');
+
+//Custom Macro
+Route::get('test-macro', function(){
+   dd(\Illuminate\Support\Str::isLength('This is a Laravel Macro', 23));
+});
+
+Route::get('test-queries', function (\Illuminate\Http\Request $request) {
+    $response = DB::table('users')->select('name', 'email')->where('id', $request->input('id'))->get();
+    // $response = \App\User::select('name', 'email')->where('id', $request->input('id'))->orderBy('name')->get();
+    // $response = \App\User::where('active', 1)->first();
+    // $response = \App\Permission::where('slug','create')->first();   
+    return response()->json([
+        'result' => $response,
+    ]);
+});
+
+Route::group(['middleware' => 'role:developer'], function() {
+    Route::get('roles', 'PermissionController@index'); 
+});

@@ -6,9 +6,12 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use App\Permissions\UserRolesAndPermissionsTrait;
+
 class User extends Authenticatable
 {
     use Notifiable;
+    use UserRolesAndPermissionsTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -40,4 +43,14 @@ class User extends Authenticatable
 
     protected $guarded = ['*'];
 
+    public function roles()
+    {
+        return $this->belongsToMany(\App\Role::class, 'user_roles');
+    }
+
+    public function permissions()
+    {
+        return $this->belongsToMany(\App\Permission::class, 'user_permissions');
+    }
+    
 }

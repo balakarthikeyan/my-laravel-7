@@ -23,6 +23,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // \Illuminate\Support\Str::macro('isLength', function ($str, $length) {
+        //     return static::length($str) == $length;
+        // });
+        \Illuminate\Support\Str::mixin(new \App\Mixins\TestMixin);
     }
 }
