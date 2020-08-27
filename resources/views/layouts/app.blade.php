@@ -48,13 +48,26 @@
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
-                        @else                       
+                        @else 
+                            <li class="nav-item dropdown">
+                                <a id="notifyDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Notifications {{ auth()->user()->unreadNotifications->count() }}  
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notifyDropdown">
+                                    {{-- Mark all as read notification --}}
+                                    @foreach(auth()->user()->unreadNotifications as $notification)
+                                        <a class="dropdown-item" href="">{{ $notification->type }} of {{ $notification->data['data'] }}  </a>                                    
+                                    @endforeach
+                                    <a class="dropdown-item" href="{{ url('notify-read') }}"> Mark All </a>
+                                </div>
+                            </li>          
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
                                     @if(auth()->user()->hasRole('admin'))
                                         <a class="dropdown-item" href=""> Users </a>
                                     @endif 

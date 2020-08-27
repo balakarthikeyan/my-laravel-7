@@ -7,6 +7,15 @@ use Illuminate\Http\Request;
 
 class ImageController extends Controller
 {
+    /**
+    * Create a new controller instance.
+    *
+    * @return void
+    */
+    public function __construct()
+    {
+        $this->middleware('auth')->except('store');
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -30,19 +39,19 @@ class ImageController extends Controller
 
         request()->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-
         ]);
 
         $imageName = time().'.'.request()->image->getClientOriginalExtension();
         $input['image'] = $imageName;
-        request()->image->move(public_path('images'), $imageName);
-
-        // $file = $request->file('file');
-        // $input['file'] = $file->getClientOriginalName();
-        // $file->move(public_path('upload'),$file->getClientOriginalName());
-        // Image::create(['file' => $input['file']]);
-
+        request()->image->move(public_path('uploads'), $imageName);
         Image::create($input);
+
+        // $file = $request->file('image');
+        // $fileName = $file->getClientOriginalName();
+        // $file->move(public_path('uploads'), $fileName);
+        // $file->storeAs('files', $fileName);
+        // Image::create(['image' => $fileName]);
+
         return redirect()->route('image.create') ->with('success','Image Upload Successfully');
     }
 
@@ -63,7 +72,7 @@ class ImageController extends Controller
         if($validator->passes()){
             $imageName = time().'.'.request()->image->getClientOriginalExtension();
             $input['image'] = $imageName;
-            request()->image->move(public_path('photos'), $imageName);
+            request()->image->move(public_path('uploads'), $imageName);
 
             Image::create($input);
 

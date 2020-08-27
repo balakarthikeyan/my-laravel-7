@@ -33,4 +33,9 @@ class HomeController extends Controller
         // dd( $result );           
         return view('home');
     }
+    
+    public function admin()
+    {
+        return view('admin.index');
+    }    
 }

@@ -19,7 +19,7 @@
     <div class="col-md-6 offset-3 mt-5">
         <div class="card">
             <div class="card-header">
-                <h4>Laravel 7 Image Upload - NiceSnippets.com</h4>
+                <h4>Ajax Image Upload Example</h4>
             </div>
             <div class="card-body">
                 @if (count($errors) > 0)
@@ -43,7 +43,12 @@
                     @csrf
                     <div class="form-group">
                         <label><strong>Image : </strong></label>
-                        <input type="file" name="image" class="form-control">
+                        <input type="file" name="image" class="form-control @error('image') is-invalid @enderror">
+                        @error('image')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror                        
                     </div>
                     <div class="form-group text-center">
                         <input type="submit" class="btn btn-success" name="submit" value="Save">

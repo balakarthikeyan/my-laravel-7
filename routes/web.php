@@ -21,6 +21,7 @@ Route::get('/', function () {
 //Authentication Routes
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/admin', 'HomeController@admin')->name('admin');
 
 //Products Routes
 Route::resource('products','ProductController');
@@ -129,3 +130,17 @@ Route::get('test-queries', function (\Illuminate\Http\Request $request) {
 Route::group(['middleware' => 'role:developer'], function() {
     Route::get('roles', 'PermissionController@index'); 
 }); 
+
+Route::get('notify-read', function(){
+    foreach(auth()->user()->unreadNotifications as $notification) {
+        $notification->markAsRead();                                 
+    }
+    return redirect()->back();
+});
+
+Route::get('notify-delete', function(){
+    foreach(auth()->user()->unreadNotifications as $notification) {
+        $notification->delete();                                 
+    }
+    return redirect()->back();
+});
