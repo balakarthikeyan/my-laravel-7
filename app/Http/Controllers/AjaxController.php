@@ -40,11 +40,5 @@ class AjaxController extends Controller
           
         return view('pages.chart', compact('users'));
     }
-    
-    public function getsession()
-    {
-        $sessions = Session::with('user')->get();
-        return view('pages.index', compact('sessions'));
-    }
 
 }

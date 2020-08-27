@@ -82,20 +82,18 @@ Route::get('/quote', function() {
 });
 
 //Test Page Routes
-Route::get('/pages', function () {
-    // $data = Helper::my_helper_function();
+Route::get('/test-page', function () {
     return view('pages.index');
 });
-
+Route::post('test-form','TestController@testform'); 
+Route::get('/test-component', function () {
+    return view('pages.component');
+});
 Route::get('/test-middleware', 'TestController@index')->middleware('test.middleware');
 Route::get('/test-event', 'TestController@index')->name('test.event');
-Route::get('/test-markdown', 'TestController@testmail')->name('test.markdown');
+Route::get('/test-mail-markdown', 'TestController@testmail')->name('test.markdown');
 Route::get('/test-mail', 'TestController@sendmail')->name('test.mail');
 Route::get('/test-notify', 'TestController@testnotify')->name('test.notify');
-Route::get('/test-notify-asread', function(){
-	auth()->user()->unreadNotifications->markAsRead();
-	return redirect()->back();
-})->name('test.notify.asread');
 
 //oauth Routes
 Route::get('auth/social', 'Auth\LoginController@show')->name('social.login');
@@ -113,9 +111,9 @@ Route::get('cache-users', function () {
 //Custom Cache with Events
 Route::get('posts', 'PostController@index');
 
-//Custom Macro
+//Custom Macro & Helper
 Route::get('test-macro', function(){
-   dd(\Illuminate\Support\Str::isLength('This is a Laravel Macro', 23));
+    Helper::debug_variable_helper(\Illuminate\Support\Str::isLength('This is a Laravel Macro', 23));
 });
 
 Route::get('test-queries', function (\Illuminate\Http\Request $request) {
@@ -130,4 +128,4 @@ Route::get('test-queries', function (\Illuminate\Http\Request $request) {
 
 Route::group(['middleware' => 'role:developer'], function() {
     Route::get('roles', 'PermissionController@index'); 
-});
+}); 

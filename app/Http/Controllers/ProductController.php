@@ -9,6 +9,16 @@ use Illuminate\Support\Facades\Notification;
 class ProductController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth'); 
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -37,16 +47,20 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'detail' => 'required',
-        ], 
-        [
-            'name.required' => 'Name is required',
-            'detail.required' => 'Kindly provide  product details as it is required'
-        ]);
-        Product::create($request->all());
-        return redirect()->route('products.index')->with('success','Product created successfully.');
+        if ($request->user()->can('create')) {
+            $request->validate([
+                'name' => 'required',
+                'detail' => 'required',
+            ], 
+            [
+                'name.required' => 'Name is required',
+                'detail.required' => 'Kindly provide  product details as it is required'
+            ]);
+            Product::create($request->all());
+            return redirect()->route('products.index')->with('success','Product created successfully.');
+        } else {
+            return redirect()->route('products.index')->with('success','Unauthorized to access');
+        }
     }
 
     /**

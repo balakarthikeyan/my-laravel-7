@@ -38,21 +38,5 @@ class PermissionServiceProvider extends ServiceProvider
         \Blade::directive('endrole', function ($role) {
             return "<?php endif; ?>"; //return this endif statement inside php tag
         });
-
-        \Blade::directive('isHome', function () {
-            $isHomePage = false;
-
-            // check if we are on the homepage
-            if ( request()->is('/') ) {
-                $isHomePage = true;
-            }
-
-            return "<?php if ($isHomePage) { ?>";
-        });
-
-        \Blade::directive('endHome', function () {
-            return "<?php } ?>";
-        });        
-
     }
 }

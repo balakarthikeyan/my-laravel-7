@@ -20,10 +20,6 @@
 
                     {{ __('You are logged in!') }}
 
-                    @isHome
-                        <p>Hot New on Homepage</p>
-                    @endHome
-
                     @can('create')
                         <br/>Hello You can Create the post.
                     @endcan

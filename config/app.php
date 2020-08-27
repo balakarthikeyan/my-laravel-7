@@ -182,6 +182,7 @@ return [
          * Custom Service Providers...
          */
         App\Providers\PermissionServiceProvider::class,
+        App\Providers\BladeServiceProvider::class,
     ],
 
     /*

@@ -17,7 +17,7 @@ class PostController extends Controller
         $posts = cache('posts', function () {
             return Post::with('user', 'category')->orderBy('created_at', 'desc')->take(5)->get();
         });
-        return view('pages.index', compact('posts'));
+        return view('pages.posts', compact('posts'));
     }
 
     /**
