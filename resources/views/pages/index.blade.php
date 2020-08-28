@@ -1,6 +1,6 @@
 @extends('layouts.default')
 @section('content')
-
+    {{-- 
     @ishome
         <p>Welcome to Homepage</p>
     @endishome
@@ -18,11 +18,34 @@
     @else
         <p>The application is not in the local or testing environment</p>
     @endenv
-
-    <form method="post" action="test-form">
+    --}}
+    @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    @if ($message = Session::get('message'))
+        <div class="alert alert-success alert-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong>
+        </div>
+    @endif
+    <form action="{{ route('test-form') }}" method="post">
         @csrf  
-        <div><label for="test-field">Test Field</label>
-        <input type="text" name="test-field"></div><br>
+        <div>
+        <label for="test-field">Test Field</label>
+            <input type="text" name="test-field" class="form-control @error('test-field') is-invalid @enderror">
+            @error('test-field')
+                <span class="text-danger" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+        <br>
         <div><button type="submit">Submit </button></div>
     </form>
 

@@ -13,9 +13,6 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-2">
-            <a href="admin/logout">Logout</a>
-        </div>
     </div>
 </div>
 @endsection

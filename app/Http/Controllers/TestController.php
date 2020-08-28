@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Middleware\TestMiddleware;
 
+use App\Rules\UpperCase;
+use App\Http\Requests\TestControllerRequest;
+
 class TestController extends Controller
 {
     public function __construct()
@@ -69,44 +72,23 @@ class TestController extends Controller
 
     public function testform(Request $request)
     {
-        // Adding Value to Session Array
-        // $request->session()->put('my_session', $request->all());
-        \Session::put('my_session', $request->all());
-        
-        /*
-        // Regenerate session IDs
-        echo "<pre>Session ID : ".$request->session()->regenerate()."</pre>";  
+        // Validate incoming request
+        // $validator = $request->validated();
 
-        // Retrieve Session Values           
-        echo "<pre>Added to Session : <br/>"; print_r($request->session()->get('my_session')); echo "</pre>"; 
-        echo "<pre>From Global Session : <br/>"; print_r(session('my_session')); echo "</pre>";
+        $validator = \Validator::make($request->all(), [
+            'test-field' => ['required','max:255', new UpperCase],
+        ]);
 
-        // Specifying a default value...
-        $request->session()->get('my_session.test-consent', false);
-
-        if (!$request->session()->has('my_session.test-consent')) {
-            // Pushing To Array Session Values
-            $request->session()->push('my_session.test-consent', true);
+        if ($validator->fails()) {
+            \Session::flash('message', $validator->messages()->first());
+            return redirect()->back()->withInput();
         }
 
-        // Retrieving & Deleting An Item
-        $request->session()->pull('my_session.test-consent', true);
-
-        // Remove an item from the session
-        $request->session()->forget('my_session.test-consent');
-
-        // Store items in the session only for the next request.
-        $request->session()->flash('status', 'Added successfully!');
-
-        // Remove all values from session
-        $request->session()->flush();
-        */
-
-        // Retrieving All Session Data
-        echo "<pre>"; print_r($request->session()->all()); echo "</pre>";
-
-        // return View::make('pages.index')->with(compact('content', 'session', 'message'));
-        return view('pages.index', $request->all());
-    }    
-      
+        if($validator->passes()){
+            \Session::put('my_session', $request->all());
+            \Session::flash('message', "Form Submitted Successfully !!");
+            // echo "<pre>"; print_r($request->session()->all()); echo "</pre>";
+            return redirect()->route('test-page');
+        }
+    }
 }

@@ -32,12 +32,12 @@ class BladeServiceProvider extends ServiceProvider
         }); 
 
         \Blade::directive('subscribed', function () {
-            $conditon = false;
+            $condition = false;
 
             // check if the user is authenticated
             if (\Auth::check()) {
                 // check if the user has a subscription
-                $condition = \Auth::user()->isSubscribed;
+                $condition = \Auth::guard('guest')->user()->isSubscribed;
             }
 
             return "<?php if ($condition) { ?>";

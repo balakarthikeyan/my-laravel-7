@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Facades\App\Helper\Helper;
+use Facades\App\Helpers\Helpers;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +21,6 @@ Route::get('/', function () {
 //Authentication Routes
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/admin', 'HomeController@admin')->name('admin');
 
 //Products Routes
 Route::resource('products','ProductController');
@@ -85,8 +84,9 @@ Route::get('/quote', function() {
 //Test Page Routes
 Route::get('/test-page', function () {
     return view('pages.index');
-});
-Route::post('test-form','TestController@testform'); 
+})->name('test-page');
+Route::post('/test-form','TestController@testform')->name('test-form'); 
+Route::get('/test-routes','TestController@saveroutes'); 
 Route::get('/test-component', function () {
     return view('pages.component');
 });
@@ -114,7 +114,8 @@ Route::get('posts', 'PostController@index');
 
 //Custom Macro & Helper
 Route::get('test-macro', function(){
-    Helper::debug_variable_helper(\Illuminate\Support\Str::isLength('This is a Laravel Macro', 23));
+    Helpers::debug_variable_helper(\Illuminate\Support\Str::isLength('This is a Laravel Macro', 23));
+    Helpers::debug_variable_helper(Helpers::app_name());
 });
 
 Route::get('test-queries', function (\Illuminate\Http\Request $request) {
@@ -143,4 +144,22 @@ Route::get('notify-delete', function(){
         $notification->delete();                                 
     }
     return redirect()->back();
+});
+
+Route::prefix('/admin')->name('admin.')->namespace('Auth')->group(function(){
+    //Login Routes
+    Route::get('/login','AdminController@showLoginForm')->name('login');
+    Route::post('/login','AdminController@login')->name('login.submit');
+    Route::post('/logout','AdminController@logout')->name('logout');
+
+    //Forgot Password Routes
+    Route::get('/password/reset','ForgotPasswordController@showLinkRequestForm')->name('password.request');
+    Route::post('/password/email','ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+
+    //Reset Password Routes
+    Route::get('/password/reset/{token}','ResetPasswordController@showResetForm')->name('password.reset');
+    Route::post('/password/reset','ResetPasswordController@reset')->name('password.update');
+
+    //Pages
+    Route::get('/','AdminController@index')->name('dashboard')->middleware('auth:admin');    
 });

@@ -48,7 +48,8 @@
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
-                        @else 
+                        @else
+                            @if(Auth::guard('web')->check()) 
                             <li class="nav-item dropdown">
                                 <a id="notifyDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     Notifications {{ auth()->user()->unreadNotifications->count() }}  
@@ -60,28 +61,38 @@
                                     @endforeach
                                     <a class="dropdown-item" href="{{ url('notify-read') }}"> Mark All </a>
                                 </div>
-                            </li>          
+                            </li>
+                            @endif          
                             <li class="nav-item dropdown">
+                                @if(Auth::guard('web')->check())
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
-
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-
-                                    @if(auth()->user()->hasRole('admin'))
-                                        <a class="dropdown-item" href=""> Users </a>
-                                    @endif 
-
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
                                 </div>
+                                @endif
+                                @if(Auth::guard('admin')->check())
+                                    <a id="adminDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        {{ Auth::guard('admin')->user()->name }} <span class="caret"></span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="adminDropdown">
+                                        <a href="{{route('admin.dashboard')}}" class="dropdown-item">Dashboard</a>
+                                        <a class="dropdown-item" href="#" onclick="event.preventDefault();document.querySelector('#admin-logout-form').submit();">
+                                            Logout
+                                        </a>
+                                        <form id="admin-logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
+                                    </div>
+                                @endif                                 
                             </li>
                         @endguest
                     </ul>

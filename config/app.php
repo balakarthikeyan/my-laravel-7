@@ -177,12 +177,14 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\TelescopeServiceProvider::class,
 
         /*
          * Custom Service Providers...
          */
         App\Providers\PermissionServiceProvider::class,
         App\Providers\BladeServiceProvider::class,
+        App\Providers\HelperServicerProvider::class,
     ],
 
     /*

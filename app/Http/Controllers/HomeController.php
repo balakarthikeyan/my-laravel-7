@@ -32,10 +32,5 @@ class HomeController extends Controller
         // $result = $user->can('create'); // will return true, if user has permission  
         // dd( $result );           
         return view('home');
-    }
-    
-    public function admin()
-    {
-        return view('admin.index');
-    }    
+    }   
 }
