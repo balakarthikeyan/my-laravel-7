@@ -25,6 +25,16 @@ class AdminController extends Controller
     public $decayMinutes = 3;
 
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        // $this->middleware('guest:admin')->except('logout');
+    }
+
+    /**
      * Username used in ThrottlesLogins trait
      * 
      * @return string

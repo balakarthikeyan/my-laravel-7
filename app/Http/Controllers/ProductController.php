@@ -114,7 +114,17 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success','Product deleted successfully');
     }
 
-    public function ajax(Request $request)
+    
+    public function ajaxlist() 
+    {
+        if(request()->ajax()) {
+            // return datatables()->of(\DB::table('products')->select('*'))->make(true);
+            return datatables()->of(Product::select('*'))->addColumn('action', 'products.action')->rawColumns(['action'])->addIndexColumn()->make(true);    
+        }
+        return view('products.table');
+    }
+
+    public function ajaxstore(Request $request)
     {
         $validator = \Validator::make($request->all(), [
             'name' => 'required',
@@ -122,10 +132,30 @@ class ProductController extends Controller
         ]);
     
         if ($validator->passes()) {
-            Product::create($request->all());
-            return response()->json(['success'=>'Product created successfully.']);
+            // Product::updateOrCreate(condition, array);
+            if($request->product_id == 0) {
+                Product::create($request->all());
+                return response()->json(['success'=>'Product created successfully.']);
+            } else if($request->product_id > 0) {
+                Product::where('id', $request->product_id)->update(['name' => $request->name, 'detail' => $request->detail]);
+                return response()->json(['success','Product updated successfully.']);   
+            }       
         }
 
         return response()->json(['error'=>$validator->errors()->all()]);
-    }    
+    }
+
+    public function ajaxedit($product_id)
+    {   
+        $where = array('id' => $product_id);
+        $product  = Product::where($where)->first();
+        \Log::info($product);
+        return response()->json($product);
+    }
+
+    public function ajaxdelete($product_id)
+    {
+        $product = Product::where('id', $product_id)->delete();      
+        return response()->json(['success','Product deleted successfully.']);
+    }            
 }

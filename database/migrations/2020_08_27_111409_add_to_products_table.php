@@ -15,6 +15,7 @@ class AddToProductsTable extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             $table->bigIncrements('id')->change();
+            $table->string('slug');
             $table->double('price');
             $table->string('stock');
             $table->double('discount');

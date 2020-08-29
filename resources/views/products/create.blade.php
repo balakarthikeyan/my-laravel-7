@@ -32,7 +32,6 @@
 </div>
 @endif
 <form action="{{ route('products.store') }}" method="post">
-{{-- <form id="post-form" method="post" action="javascript:void(0)"> --}}
     @csrf
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
@@ -68,32 +67,4 @@
         </div>
     </div>
 </form>
-{{-- 
-<script type="text/javascript">
-    $.ajaxSetup({
-        headers: {
-            "X-CSRF-TOKEN": $("input[name='_token']").val(),
-        },
-    });
-
-    $(".btn-submit").click(function (e) {
-        e.preventDefault();
-        var name = $("input[name=name]").val();
-        var detail = $("textarea[name=detail]").val();
-        var _token = $("input[name='_token']").val();
-        $.ajax({
-            type: "POST",
-            url: "{{ route('ajax.products') }}",
-            data: { _token:_token, name: name, detail: detail },
-            success: function (data) {
-                if($.isEmptyObject(data.error)){
-                    alert(data.success);
-                } else {
-                    alert(data.error);
-                }
-            },
-        });
-    });
-</script>
---}}
 @endsection

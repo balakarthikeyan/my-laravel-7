@@ -7,6 +7,7 @@ use App\Http\Middleware\TestMiddleware;
 
 use App\Rules\UpperCase;
 use App\Http\Requests\TestControllerRequest;
+use App\Jobs\SendWelcomeEmail;
 
 class TestController extends Controller
 {
@@ -90,5 +91,13 @@ class TestController extends Controller
             // echo "<pre>"; print_r($request->session()->all()); echo "</pre>";
             return redirect()->route('test-page');
         }
+    }
+
+    public function processQueue()
+    {
+        $emailJob = new SendWelcomeEmail();
+        // $emailJob = new SendWelcomeEmail()->delay(\Carbon\Carbon::now()->addMinutes(5));
+        dispatch($emailJob);
+        return dd("Done");
     }
 }

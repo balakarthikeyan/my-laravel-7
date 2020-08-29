@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Helpers\Helpers;
 
 class HelperServicerProvider extends ServiceProvider
 {
@@ -13,7 +14,7 @@ class HelperServicerProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->loadHelpers();
+        // $this->loadHelpers();
     }
 
     /**
@@ -23,13 +24,13 @@ class HelperServicerProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->loadHelpers();
     }
 
     protected function loadHelpers()
     {
-        foreach (glob(__DIR__.'/Helpers/*.php') as $filename){
-            require_once $filename;
-        }
+        $this->app->bind('helpers',function(){
+            return new Helpers();    
+        });        
     }    
 }

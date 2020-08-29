@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Facades\App\Helpers\Helpers;
+// use Facades\App\Helpers\Helpers;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,15 +24,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //Products Routes
 Route::resource('products','ProductController');
-// Route::post('products', 'ProductController@ajax')->name('ajax.products');
 
 //Products based on Datatables
-Route::get('datatables', function(){
-    return view('products.table');
-});
-Route::get('productslist', function(){
-    return datatables()->of(\DB::table('products')->select('*'))->make(true);
-})->name('productslist');
+Route::get('product-list', 'ProductController@ajaxlist')->name('ajax.products.list');
+Route::post('product-list/store', 'ProductController@ajaxstore')->name('ajax.products.store');
+Route::get('product-list/edit/{id}', 'ProductController@ajaxedit');
+Route::get('product-list/delete/{id}', 'ProductController@ajaxdelete');
 
 //High Charts
 Route::get('chart', 'AjaxController@charts');
@@ -163,3 +160,5 @@ Route::prefix('/admin')->name('admin.')->namespace('Auth')->group(function(){
     //Pages
     Route::get('/','AdminController@index')->name('dashboard')->middleware('auth:admin');    
 });
+
+Route::get('test-queue', 'TestController@processQueue');

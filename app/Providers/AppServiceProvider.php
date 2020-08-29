@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Passport;
+use App\Models\Product;
+use App\Observers\ProductObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,5 +30,8 @@ class AppServiceProvider extends ServiceProvider
         //     return static::length($str) == $length;
         // });
         \Illuminate\Support\Str::mixin(new \App\Mixins\TestMixin);
+
+        // Model Observers
+        Product::observe(ProductObserver::class);
     }
 }

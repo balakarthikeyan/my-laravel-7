@@ -242,6 +242,11 @@ return [
          */
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+
+        /*
+         * Custom Facade alias...
+         */
+        'Helpers'   =>  App\Helpers\HelpersFacade::class
     ],
 
 ];
