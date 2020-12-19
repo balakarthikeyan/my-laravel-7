@@ -17,6 +17,9 @@ class CreateProfilesTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('username');
+            $table->string('status');
+            $table->tinyInteger('points')->default(0);
             $table->date('dob');
             $table->text('bio');
             $table->string('facebook');

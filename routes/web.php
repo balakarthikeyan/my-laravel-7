@@ -162,3 +162,18 @@ Route::prefix('/admin')->name('admin.')->namespace('Auth')->group(function(){
 });
 
 Route::get('test-queue', 'TestController@processQueue');
+
+Route::get('/search-users', 'TestController@searchindex')->name('users.index');
+Route::post('/search-users', 'TestController@searchusers')->name('users.search');
+Route::get('/search-profile/{id}', 'ProfileController');
+
+// Unhandled API Routes – Fallback Method
+Route::fallback(function(){
+    return response()->json([
+        'message' => 'Page Not Found. If error persists, contact info@website.com'], 404);
+});
+
+
+Route::get('/test-s3', 'TestController@tests3list');
+// Route::resource('images', 'TestController', ['only' => ['tests3store', 'tests3destroy']]);
+Route::post('/test-fileupload','TestController@tests3store');

@@ -30,6 +30,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
         $schedule->command('todaysuser:test')->everyMinute();
         $schedule->command('email:inactive-users')->weekly();
+        // $schedule->exec('cd ~/var/www/html/larashout && ls')->sendOutputTo('/home/larashout/log.txt')->everyMinute();
     }
 
     /**

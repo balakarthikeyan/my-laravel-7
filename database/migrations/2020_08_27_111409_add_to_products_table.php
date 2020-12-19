@@ -19,7 +19,11 @@ class AddToProductsTable extends Migration
             $table->double('price');
             $table->string('stock');
             $table->double('discount');
-            $table->integer('user_id')->unsigned();
+            $table->tinyInteger('featured')->default(0);
+            $table->unsignedBigInteger('user_id');
+
+            //FOREIGN KEY CONSTRAINTS
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');            
         });
     }
 
