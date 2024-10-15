@@ -12,7 +12,7 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 --
--- Database: `webservices`
+-- Database: `laravel_7`
 --
 
 -- --------------------------------------------------------
